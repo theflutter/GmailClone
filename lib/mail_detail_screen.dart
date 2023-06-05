@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mail_app/data.dart';
-import 'package:http/http.dart' as http;
 
 class MailDetailScreen extends StatelessWidget {
   MailDetailScreen(

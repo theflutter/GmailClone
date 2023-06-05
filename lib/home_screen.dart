@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mail_app/compose_email_screen.dart';
 import 'package:mail_app/data.dart';
 import 'package:mail_app/mail_detail_screen.dart';
+import 'package:mail_app/sent_messages.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -338,6 +339,14 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _selectedItem = index;
         });
+        if (index == 9) {
+          // Check if "Sent" drawer item is clicked
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) {
+              return const SentMessagesScreen(); // Replace SentMessagesScreen with the actual screen that displays the sent messages
+            },
+          ));
+        }
       },
       child: Container(
         padding:

@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mail_app/data.dart';
+import 'package:mail_app/home_screen.dart';
 
-class ComposeScreen extends StatelessWidget {
-  ComposeScreen({Key? key, required void onSendMessage}) : super(key: key);
+class ComposeScreen extends StatefulWidget {
+  const ComposeScreen({Key? key, required void onSendMessage}) : super(key: key);
+
+  @override
+  State<ComposeScreen> createState() => _ComposeScreenState();
+}
+
+class _ComposeScreenState extends State<ComposeScreen> {
+  bool expandMore = false;
+
+  bool showCcField = false;
+
+  bool showBccField = false;
+
   final List<String> menuTabItems = [
     'Schedule send',
     "Confidential Mode",
@@ -10,6 +23,7 @@ class ComposeScreen extends StatelessWidget {
     "Settings",
     "help and feedback"
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +64,11 @@ class ComposeScreen extends StatelessWidget {
                           child: Text('OK'),
                           onPressed: () {
                             Navigator.of(context).pop();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(),
+                              ),
+                            );
                           },
                         ),
                       ],
@@ -73,6 +92,15 @@ class ComposeScreen extends StatelessWidget {
                       ),
                     )
                     .toList(),
+                onSelected: (value) {
+                  setState(() {
+                    if (value == 'Cc') {
+                      showCcField = true;
+                    } else if (value == 'Bcc') {
+                      showBccField = true;
+                    }
+                  });
+                },
               ),
             ),
           ],
@@ -96,7 +124,7 @@ class ComposeScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.black54, fontSize: 16),
                     ),
                   ),
-                  hintText: 'example@mail.com',
+                  hintText: '+91 7993791231',
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.expand_more),
                     color: Colors.black54,
@@ -120,10 +148,53 @@ class ComposeScreen extends StatelessWidget {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.expand_more),
                     color: Colors.black54,
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        expandMore = !expandMore;
+                      });
+                    },
                   ),
                 ),
               ),
+              if (expandMore)
+                Column(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: kPadding - 4),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: kPadding - 7,
+                              left: kPadding - 10,
+                              right: kPadding - 10),
+                          child: const Text(
+                            'Cc',
+                            style:
+                                TextStyle(color: Colors.black54, fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: kPadding - 4),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: kPadding - 7,
+                              left: kPadding - 10,
+                              right: kPadding - 10),
+                          child: const Text(
+                            'Bcc',
+                            style:
+                                TextStyle(color: Colors.black54, fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               TextField(
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(
